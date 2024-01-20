@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
@@ -11,11 +12,31 @@ const dummyComments = [
 ];
 
 export default function ProductReview() {
+  const [text, setText] = useState('');
+
+  const handleValueChange = (e: any) => {
+    const data = e.target.value;
+    // console.log(data);
+    setText(data);
+  };
+  const handleSubmit = () => {
+    console.log(text);
+    console.log(' Submit');
+  };
+
   return (
     <div className="max-w-7xl mx-auto mt-5">
       <div className="flex gap-5 items-center">
-        <Textarea className="min-h-[30px]" />
-        <Button className="rounded-full h-10 w-10 p-2 text-[25px]">
+        <Textarea
+          className="min-h-[30px]"
+          name="comment"
+          defaultValue={''}
+          onChange={handleValueChange}
+        />
+        <Button
+          className="rounded-full h-10 w-10 p-2 text-[25px]"
+          onClick={handleSubmit}
+        >
           <FiSend />
         </Button>
       </div>
