@@ -11,7 +11,10 @@ import {
 export default function ProductReview({ id }) {
   // console.log(id);
   const [comment, setComment] = useState('');
-  const { data } = useGetCommentsQuery(id);
+  const { data } = useGetCommentsQuery(id, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
 
   // const { comments } = data;
 
