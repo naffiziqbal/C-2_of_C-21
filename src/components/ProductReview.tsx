@@ -3,25 +3,35 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { FiSend } from 'react-icons/fi';
+import {
+  useGetCommentsQuery,
+  usePostCommentMutation,
+} from '@/redux/apis/productApi';
 
-const dummyComments = [
-  'Bhalo na',
-  'Ki shob ghori egula??',
-  'Eta kono product holo ??',
-  '200 taka dibo, hobe ??',
-];
+export default function ProductReview({ id }) {
+  // console.log(id);
+  const [comment, setComment] = useState('');
+  const { data } = useGetCommentsQuery(id);
 
-export default function ProductReview() {
-  const [text, setText] = useState('');
+  // const { comments } = data;
+
+  const [postComment, { isError, isLoading, isSuccess }] =
+    usePostCommentMutation();
 
   const handleValueChange = (e: any) => {
     const data = e.target.value;
     // console.log(data);
-    setText(data);
+    setComment(data);
   };
   const handleSubmit = () => {
-    console.log(text);
+    const options = {
+      id,
+      comment,
+    };
+    postComment(options);
+    console.log(comment);
     console.log(' Submit');
+    console.log(isError, isLoading, isSuccess);
   };
 
   return (
@@ -41,7 +51,7 @@ export default function ProductReview() {
         </Button>
       </div>
       <div className="mt-10">
-        {dummyComments.map((comment, index) => (
+        {data?.comments.map((comment: string, index: number) => (
           <div key={index} className="flex gap-3 items-center mb-5">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />
