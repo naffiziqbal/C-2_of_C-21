@@ -44,6 +44,11 @@ export default function Navbar() {
                 </Button>
               </li>
               <li>
+                <Button variant="ghost">
+                  <Link to={'/login'}>Login</Link>
+                </Button>
+              </li>
+              <li>
                 <Cart />
               </li>
               <li className="ml-5">

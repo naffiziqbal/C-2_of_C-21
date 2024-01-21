@@ -6,24 +6,33 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { createUser } from '@/redux/features/user/userSlice';
+import { useAppDispatch } from '@/redux/hooks/hooks';
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function SignupForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+  const dispatch = useAppDispatch();
+  interface Inputs {
+    email: string;
+    password: number;
   }
+  const { register, handleSubmit } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 3000);
+   
+    dispatch( createUser({ email: data.email, password: data.password }))
+  };
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
@@ -33,6 +42,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
               id="email"
               placeholder="name@example.com"
               type="email"
+              {...register('email')}
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
@@ -40,6 +50,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
             />
             <Input
               id="password"
+              {...register('password')}
               placeholder="your password"
               type="password"
               autoCapitalize="none"
