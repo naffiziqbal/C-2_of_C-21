@@ -6,7 +6,7 @@ import { FiSend } from 'react-icons/fi';
 import {
   useGetCommentsQuery,
   usePostCommentMutation,
-} from '@/redux/apis/productApi';
+} from '@/redux/features/product/productApis';
 
 export default function ProductReview({ id }) {
   // console.log(id);

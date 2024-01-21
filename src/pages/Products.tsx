@@ -3,11 +3,10 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
-import { useGetProductsQuery } from '@/redux/apis/productApi';
 import { setPriceRange, setToggle } from '@/redux/features/product/filterSlice';
+import { useGetProductsQuery } from '@/redux/features/product/productApis';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks/hooks';
 import { IProduct } from '@/types/globalTypes';
-import { useEffect, useState } from 'react';
 
 export default function Products() {
   // const [data, setData] = useState<IProduct[]>([]);
